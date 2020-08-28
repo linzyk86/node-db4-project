@@ -3,6 +3,7 @@ exports.up = async function(knex) {
   await knex.schema.createTable("recipes", (table)=>{
       table.increments("id")
       table.text("name").notNull()
+      table.text("instructions").notNull()
   })
   await knex.schema.createTable("ingredients", (table)=>{
       table.increments("id")
@@ -11,7 +12,7 @@ exports.up = async function(knex) {
   await knex.schema.createTable("recipe_ingredients", (table)=>{
       table.integer("recipe_id").references("id").inTable("recipies")
       table.integer("ingredients_id").references("ingredients").inTable("ingredients")
-      table.integer("quantity").notNull()
+      table.float("quantity").notNull()
       //pass an array of the two ids for primary key
       table.primary(["recipe_id", "ingredients_id"])
   })
